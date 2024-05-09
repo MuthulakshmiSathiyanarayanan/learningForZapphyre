@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from "react";
 
-function App() {
+let reachA = new Promise((resolve, reject) => {
+  const reached = true;
+  if (reached) setTimeout(resolve, 1000, "A reached");
+  else reject("A have  not reached");
+});
+async function fn() {
+  try {
+    console.log("hoorey....");
+    const response = await reachA;
+    console.log(response);
+  } catch (err) {
+    console.log("oops", err);
+  }
+}
+
+function MyComponent() {
+  useEffect(() => {
+    fn();
+  }, []); // Run only once on component mount
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>
+        Promise:
+        <br />
+        async await with try-catch
+      </h1>
     </div>
   );
 }
 
-export default App;
+export { MyComponent };
+
